@@ -180,11 +180,9 @@ if ($menu->getActive() == $menu->getDefault()) {
 			<div id="contenedor_home">
 				<div class="grid-container">
 				<?php if ($this->countModules('secciones_home')) : ?>
-				<hr class="hr-secciones_home first" />	
 					<div id="secciones_home" class="grid-100 grid-parent">
 						<jdoc:include type="modules" name="secciones_home" style="xhtml" />
 					</div>
-				<hr class="hr-secciones_home second"/>
 				<?php endif; ?>
 				<div class="grid-100 grid-parent">
 					<div class="grid-25" id="twitter">
