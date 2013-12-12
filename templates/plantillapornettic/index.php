@@ -127,34 +127,34 @@ if ($menu->getActive() == $menu->getDefault()) {
 ?>
 	<!-- Body -->
 	<div class="body">
-		<div class="grid-container" id="contenedor">
-			<!-- Header -->
-			<header class="grid-100 header " role="banner">
-				
-				<div class="grid-35" id="logo">
-					<jdoc:include type="modules" name="logo" style="none" />
-					<jdoc:include type="modules" name="redes_sociales" style="none" />
-				</div>
-				<nav class="navigation grid-65 grid-parent" id="menu_top" role="navigation">
-					<div class="grid-80">
-						<jdoc:include type="modules" name="menu_top" style="xhtml" />
-					</div>
-					<div class="grid-20" id="buscador">
-						<jdoc:include type="modules" name="buscador" style="none" />
-					</div>
-					
-				</nav>
-
-				
-				<?php if ($this->countModules('banner_principal')) : ?>
-					<div id="banner_principal" class="grid-100">
-						<jdoc:include type="modules" name="banner_principal" style="xhtml" />
-					</div>	
-				<?php endif; ?>
-			</header>
+		<!-- Header -->
+		<header class="grid-100 header " role="banner">
 			
+			<!-- <div class="grid-35" id="logo">
+				<jdoc:include type="modules" name="logo" style="none" />
+			</div> -->
+			<div class="grid-25" id="logo_ascolsa">
+				<jdoc:include type="modules" name="logo_ascolsa" style="xhtml" />
+			</div>
+			<nav class="navigation grid-75 grid-parent" id="menu_top" role="navigation">
+				<div class="grid-65">
+					<jdoc:include type="modules" name="menu_top" style="xhtml" />
+				</div>
+				<div class="grid-35" id="buscador">
+					<div class="grid-70"><jdoc:include type="modules" name="buscador" style="none"/></div>
+					<div class="grid-30"><jdoc:include type="modules" name="redes_sociales" style="none"/></div>
+				</div>
+				
+			</nav>
+			
+			<?php if ($this->countModules('banner_principal')) : ?>
+				<div id="banner_principal" class="grid-100">
+					<jdoc:include type="modules" name="banner_principal" style="xhtml" />
+				</div>	
+			<?php endif; ?>
+		</header>
 
-
+		<div class="grid-container" id="contenedor">
 			<main id="contenido" role="main" class="grid-100 ">
 				<!-- Begin Content -->
 					<jdoc:include type="modules" name="breadcrumbs" style="none" />
@@ -166,7 +166,9 @@ if ($menu->getActive() == $menu->getDefault()) {
 			</main>
 			<?php if ($this->countModules('noticias')) : ?>
 			<div id="noticias" class="grid-90 push-5">
-				<jdoc:include type="modules" name="noticias" style="xhtml" />
+				<div id="noticias-img-izq"></div>
+					<jdoc:include type="modules" name="noticias" style="xhtml" />
+				<div id="noticias-img-der"></div>
 			</div>
 			<?php endif; ?>
 		</div>

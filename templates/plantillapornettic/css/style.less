@@ -48,9 +48,9 @@
     margin-left: 0px;
     li{ 
       display:inline-block;
-      margin-right: 10px;
+   //   margin-right: 10px;
       font-size: 18px;
-      padding: 10px 10px;
+   //   padding: 10px 10px;
       a{
         color:#4F5054;
         &:hover{
@@ -68,36 +68,15 @@ body{
   padding:0px;
   font-size: 16px;
 }
-#logo {
-  // border: 1px solid black;
-  // padding: 20px;
-  text-align: left;
-  background:url("../img/head-logo.png");
-  height: 152px;
-  position:relative;
 
-  p{
-    margin:0px;
-    padding:0px;
-  }
-  .redes_sociales{
-    position: absolute;
-    right: 0px;
-    bottom:0px;
-    height: 110px;
-    width: 171px;
-    img{
-      display: block;
-      margin-top: 18px;
-    }
-    .facebook {
-     margin-left: 30px;
-    }
-    .twitter{
-      margin-left: 5px;
-    }
-  }
+#logo_ascolsa {
+  background: #0071BD url("/../../../../images/headers/marco_logo.jpg") no-repeat top right;
+  height: 20%;
 }
+.redes_sociales{
+    width: 103% !important;
+    display: inline-flex !important;
+  }
 legend {
   font-size: 12px;
 }
@@ -135,18 +114,17 @@ min-width: 1220px;
 }
 
 #menu_top {
-  background:url("../img/head.png");
+  background-color: #FFFFFF;
   margin: 0px;
   padding: 0px;
-  height: 42px;
+  height: 20%;
 }
 #menu_top ul {
-margin: 0px;
-padding: 0px;
+//margin: 0px;
   li{
     &:hover{
       background: white;
-    opacity: 0.7;  
+    //  opacity: 0.7;  
     }
   }
 
@@ -157,13 +135,26 @@ padding: 0px;
 padding-top: 5px;
 }
 @distanciaBotonLeerTodas:54px;
+#noticias-img-izq{
+  background: url("../../../images/clientes/pestana_izquierda_clientes.png") no-repeat scroll center; 
+  float: left;
+  height: 65px;
+  margin-top: 23px;
+  width: 18px;
+}
+#noticias-img-der{
+  background: url("../../../images/clientes/pestana_derecha_clientes.png") no-repeat scroll center; 
+  float: left;
+  height: 75px;
+  margin-top: 19px;
+  width: 18px; 
+}
 #noticias {
-border: 2px solid #253A73;
+background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+margin-bottom: 54px;
 margin-top: -50px;
-min-height: 100px;
-background: white;
-border-radius: 15px;
-padding: 15px 0px;
+padding: 15px 0;
+width: 85%;
 margin-bottom:@distanciaBotonLeerTodas;
   .k2ItemsBlock {
     position: relative;
@@ -208,6 +199,14 @@ margin-bottom:@distanciaBotonLeerTodas;
       background:#37539B;
       text-decoration:none;
     }
+  }
+  .moduletable{
+    background-color: #FFFFFF;
+    border: 2px solid #0071BD;
+    border-radius: 16px;
+    float: left;
+    padding: 15px;
+    width: 93%;
   }
 }
 
@@ -446,21 +445,47 @@ padding-top: 10px;
     display: inline-flex;
 }
 #mod-search-searchword {
-  width: 133px !important;
+  width: 140px !important;
   background-position: left center; 
   padding-left: 17px; width:183px;    
 
-  background: url("../images/search.png") no-repeat scroll 8px 6px rgba(0, 0, 0, 0);
-  margin: 3px;
+  background: url("../images/search.png") no-repeat scroll 8px 6px #0071BD;
+  margin-top: 10px;
   padding: 6px 15px 6px 30px;
-
+  height: 12px;
   -webkit-border-radius: 2px 14px 0 11px;
   -moz-border-radius: 2px 14px 0 11px;
   border-radius: 2px 14px 0 11px;
 }
 #menu_top ul{
-  margin-left:-100px !important;
+  margin-left:60px !important;
 }
+#menu_top ul li{
+  height: 84px;
+  pading: 16px;
+  width: 115px !important;
+  margin-top: -6px;
+} 
+#menu_top ul li:hover{
+  text-align: center;
+  background: url("../../../images/headers/pestana_botones.png") no-repeat scroll center bottom;
+  background-size: 109px auto;
+  a{
+    background: url("../../../images/headers/pestana_botones_2.png") no-repeat scroll center top;
+    background-color: #0071BD;
+    height: 48px !important;
+    width: auto !important;
+   // margin-right: 11px;
+  }
+}
+#menu_top ul li a{
+    margin-top: 6px;
+    height: 67px !important;
+    margin-left: 14px;
+    text-align: center;
+    padding-top: 16%;
+}
+
 .grid-80{
   width: 75%;
 }
@@ -489,4 +514,13 @@ padding-top: 10px;
 .jicons-icons img{
   display: none !important;
 }
+.custom.redes_sociales {
+  img{
+    height: 32px !important;
+    width: 32px !important;
+    margin-top: 7px;
+  }    
+}
+.navigation{
+  border-bottom: 3px solid #B9D5E4;
 }
