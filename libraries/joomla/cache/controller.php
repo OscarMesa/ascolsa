@@ -19,17 +19,13 @@ defined('JPATH_PLATFORM') or die;
 class JCacheController
 {
 	/**
-	 * JCache object
-	 *
 	 * @var    JCache
 	 * @since  11.1
 	 */
 	public $cache;
 
 	/**
-	 * Array of options
-	 *
-	 * @var    array
+	 * @var    array  Array of options
 	 * @since  11.1
 	 */
 	public $options;

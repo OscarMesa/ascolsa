@@ -10,7 +10,8 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Pagination Class. Provides a common interface for content pagination for the Joomla! CMS.
+ * Pagination Class. Provides a common interface for content pagination for the
+ * Joomla! CMS.
  *
  * @package     Joomla.Libraries
  * @subpackage  Pagination
@@ -43,25 +44,25 @@ class JPagination
 	public $prefix = null;
 
 	/**
-	 * @var    integer  Value pagination object begins at
+	 * @var    integer
 	 * @since  3.0
 	 */
 	public $pagesStart;
 
 	/**
-	 * @var    integer  Value pagination object ends at
+	 * @var    integer
 	 * @since  3.0
 	 */
 	public $pagesStop;
 
 	/**
-	 * @var    integer  Current page
+	 * @var    integer
 	 * @since  3.0
 	 */
 	public $pagesCurrent;
 
 	/**
-	 * @var    integer  Total number of pages
+	 * @var    integer
 	 * @since  3.0
 	 */
 	public $pagesTotal;
@@ -134,7 +135,6 @@ class JPagination
 		{
 			$this->pagesStart = 1;
 		}
-
 		if ($this->pagesStart + $displayedPages > $this->pagesTotal)
 		{
 			$this->pagesStop = $this->pagesTotal;
@@ -620,13 +620,10 @@ class JPagination
 		$app = JFactory::getApplication();
 
 		$title = '';
-		$class = '';
-
 		if (!is_numeric($item->text))
 		{
 			JHtml::_('bootstrap.tooltip');
-			$title = ' title="' . $item->text . '"';
-			$class = 'hasTooltip ';
+			$title = ' class="hasTooltip" title="' . $item->text . '"';
 		}
 
 		if ($app->isAdmin())
@@ -636,7 +633,7 @@ class JPagination
 		}
 		else
 		{
-			return '<a' . $title . ' href="' . $item->link . '" class="' . $class . 'pagenav">' . $item->text . '</a>';
+			return '<a' . $title . ' href="' . $item->link . '" class="pagenav">' . $item->text . '</a>';
 		}
 	}
 

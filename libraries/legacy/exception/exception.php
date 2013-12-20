@@ -208,7 +208,7 @@ class JException extends Exception
 	 * @return  mixed  The value of the property or null
 	 *
 	 * @deprecated  12.1
-	 * @see         JException::getProperties()
+	 * @see         getProperties()
 	 * @since       11.1
 	 */
 	public function get($property, $default = null)
@@ -230,7 +230,7 @@ class JException extends Exception
 	 * @return  array  Object properties
 	 *
 	 * @deprecated    12.1
-	 * @see     JException::get()
+	 * @see     get()
 	 * @since   11.1
 	 */
 	public function getProperties($public = true)
@@ -317,7 +317,7 @@ class JException extends Exception
 	 * @return  mixed  Previous value of the property
 	 *
 	 * @deprecated  12.1
-	 * @see         JException::setProperties()
+	 * @see         setProperties()
 	 * @since       11.1
 	 */
 	public function set($property, $value = null)
@@ -337,7 +337,7 @@ class JException extends Exception
 	 * @return  boolean
 	 *
 	 * @deprecated  12.1
-	 * @see         JException::set()
+	 * @see         set()
 	 * @since       11.1
 	 */
 	public function setProperties($properties)

@@ -405,6 +405,9 @@ class FinderIndexerHelper
 		// Only get the router once.
 		if (!($router instanceof JRouter))
 		{
+			jimport('joomla.application.router');
+			include_once JPATH_SITE . '/includes/application.php';
+
 			// Get and configure the site router.
 			$config = JFactory::getConfig();
 			$router = JRouter::getInstance('site');

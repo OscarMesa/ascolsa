@@ -63,7 +63,7 @@ JHtml::_('bootstrap.tooltip');
 	elseif ($show_last)
 	{
 		// Render last item if reqd.
-		echo '<li class="active">';
+		echo '<li>';
 		echo '<span>' . $item->name . '</span>';
 		echo '</li>';
 	}

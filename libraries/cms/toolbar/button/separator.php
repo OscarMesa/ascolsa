@@ -32,7 +32,7 @@ class JToolbarButtonSeparator extends JToolbarButton
 	 *
 	 * @return  string  The HTML for the separator
 	 *
-	 * @see     JToolbarButton::render()
+	 * @see     JButton::render()
 	 * @since   3.0
 	 */
 	public function render(&$definition)

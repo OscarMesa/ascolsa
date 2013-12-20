@@ -84,14 +84,14 @@ abstract class JHtmlBehavior
 			return;
 		}
 
-		// Include jQuery
-		JHtml::_('jquery.framework');
+		// Include MooTools framework
+		static::framework();
 
 		JHtml::_('script', 'system/caption.js', true, true);
 
 		// Attach caption to document
 		JFactory::getDocument()->addScriptDeclaration(
-			"jQuery(window).on('load',  function() {
+			"window.addEvent('load', function() {
 				new JCaption('" . $selector . "');
 			});"
 		);
@@ -126,7 +126,7 @@ abstract class JHtmlBehavior
 		// Include MooTools More framework
 		static::framework('more');
 
-		JHtml::_('script', 'system/validate.js', false, true);
+		JHtml::_('script', 'system/validate.js', true, true);
 		static::$loaded[__METHOD__] = true;
 	}
 
@@ -145,18 +145,18 @@ abstract class JHtmlBehavior
 			return;
 		}
 
-		// Include jQuery
-		JHtml::_('jquery.framework');
+		// Include MooTools framework
+		static::framework();
 
 		JHtml::_('script', 'system/switcher.js', true, true);
 
 		$script = "
 			document.switcher = null;
-			jQuery(function($){
-				var toggler = document.getElementById('submenu');
-				var element = document.getElementById('config-document');
+			window.addEvent('domready', function(){
+				toggler = document.id('submenu');
+				element = document.id('config-document');
 				if (element) {
-					document.switcher = new JSwitcher(toggler, element);
+					document.switcher = new JSwitcher(toggler, element, {cookieName: toggler.getProperty('class')});
 				}
 			});";
 
@@ -365,8 +365,8 @@ abstract class JHtmlBehavior
 			return;
 		}
 
-		// Include jQuery
-		JHtml::_('jquery.framework');
+		// Include MooTools framework
+		static::framework();
 
 		JHtml::_('script', 'system/multiselect.js', true, true);
 
@@ -613,18 +613,15 @@ abstract class JHtmlBehavior
 			return;
 		}
 
-		// Include jQuery
-		JHtml::_('jquery.framework');
-
 		JHtml::_('script', 'system/highlighter.js', true, true);
 
 		$terms = str_replace('"', '\"', $terms);
 
 		$document = JFactory::getDocument();
 		$document->addScriptDeclaration("
-			jQuery(function ($) {
-				var start = document.getElementById('" . $start . "');
-				var end = document.getElementById('" . $end . "');
+			window.addEvent('domready', function () {
+				var start = document.id('" . $start . "');
+				var end = document.id('" . $end . "');
 				if (!start || !end || !Joomla.Highlighter) {
 					return true;
 				}
@@ -635,8 +632,8 @@ abstract class JHtmlBehavior
 					onlyWords: false,
 					tag: '" . $tag . "'
 				}).highlight([\"" . implode('","', $terms) . "\"]);
-				$(start).remove();
-				$(end).remove();
+				start.dispose();
+				end.dispose();
 			});
 		");
 
@@ -669,7 +666,7 @@ abstract class JHtmlBehavior
 		$document->addStyleDeclaration('html { display:none }');
 		$document->addScriptDeclaration($js);
 
-		JFactory::getApplication()->setHeader('X-Frames-Options', 'SAMEORIGIN');
+		JResponse::setHeader('X-Frames-Options', 'SAMEORIGIN');
 
 		static::$loaded[__METHOD__] = true;
 	}
@@ -737,7 +734,6 @@ abstract class JHtmlBehavior
 		);
 
 		// This will become an object in Javascript but define it first in PHP for readability
-		$today = " " . JText::_('JLIB_HTML_BEHAVIOR_TODAY') . " ";
 		$text = array(
 			'INFO'			=> JText::_('JLIB_HTML_BEHAVIOR_ABOUT_THE_CALENDAR'),
 
@@ -763,9 +759,9 @@ abstract class JHtmlBehavior
 			'NEXT_MONTH'	=> JText::_('JLIB_HTML_BEHAVIOR_NEXT_MONTH_HOLD_FOR_MENU'),
 			'SEL_DATE'		=> JText::_('JLIB_HTML_BEHAVIOR_SELECT_DATE'),
 			'DRAG_TO_MOVE'	=> JText::_('JLIB_HTML_BEHAVIOR_DRAG_TO_MOVE'),
-			'PART_TODAY'	=> $today,
+			'PART_TODAY'	=> JText::_('JLIB_HTML_BEHAVIOR_TODAY'),
 			'DAY_FIRST'		=> JText::_('JLIB_HTML_BEHAVIOR_DISPLAY_S_FIRST'),
-			'WEEKEND'		=> JFactory::getLanguage()->getWeekEnd(),
+			'WEEKEND'		=> "0,6",
 			'CLOSE'			=> JText::_('JLIB_HTML_BEHAVIOR_CLOSE'),
 			'TODAY'			=> JText::_('JLIB_HTML_BEHAVIOR_TODAY'),
 			'TIME_PART'		=> JText::_('JLIB_HTML_BEHAVIOR_SHIFT_CLICK_OR_DRAG_TO_CHANGE_VALUE'),
@@ -781,30 +777,5 @@ abstract class JHtmlBehavior
 			. ' Calendar._MN = ' . json_encode($months_long) . ';'
 			. ' Calendar._SMN = ' . json_encode($months_short) . ';'
 			. ' Calendar._TT = ' . json_encode($text) . ';';
-	}
-
-	/**
-	 * Add unobtrusive JavaScript support to keep a tab state.
-	 *
-	 * Note that keeping tab state only works for inner tabs if in accordance with the following example
-	 * parent tab = permissions
-	 * child tab = permission-<identifier>
-	 *
-	 * Each tab header "a" tag also should have a unique href attribute
-	 *
-	 * @return  void
-	 *
-	 * @since   3.2
-	 */
-	public static function tabstate()
-	{
-		if (isset(self::$loaded[__METHOD__]))
-		{
-			return;
-		}
-		// Include jQuery
-		JHtml::_('jquery.framework');
-		JHtml::_('script', 'system/tabs-state.js', true, true);
-		self::$loaded[__METHOD__] = true;
 	}
 }

@@ -16,9 +16,7 @@
 			<filename>index.html</filename>
 			<folder>controllers</folder>
 			<folder>models</folder>
-			<folder>controller</folder>
-			<folder>model</folder>
-			<folder>view</folder>
+			<folder>views</folder>
 		</files>
 		<languages folder="admin">
 			<language tag="en-GB">language/en-GB.com_config.ini</language>

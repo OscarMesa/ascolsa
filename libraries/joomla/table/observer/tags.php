@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     Joomla.Libraries
+ * @package     Joomla.Platform
  * @subpackage  Table
  *
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
@@ -10,13 +10,9 @@
 defined('JPATH_PLATFORM') or die;
 
 /**
- * Abstract class defining methods that can be
- * implemented by an Observer class of a JTable class (which is an Observable).
- * Attaches $this Observer to the $table in the constructor.
- * The classes extending this class should not be instanciated directly, as they
- * are automatically instanciated by the JObserverMapper
+ * Table class supporting modified pre-order tree traversal behavior.
  *
- * @package     Joomla.Libraries
+ * @package     Joomla
  * @subpackage  Table
  * @link        http://docs.joomla.org/JTableObserver
  * @since       3.1.2
@@ -24,34 +20,29 @@ defined('JPATH_PLATFORM') or die;
 class JTableObserverTags extends JTableObserver
 {
 	/**
-	 * Helper object for managing tags
+	 * Helper object for storing and deleting tag information associated with this table observer
 	 *
-	 * @var    JHelperTags
-	 * @since  3.1.2
+	 * @var  JHelperTags
 	 */
 	protected $tagsHelper;
 
 	/**
-	 * The pattern for this table's TypeAlias
-	 *
-	 * @var    string
-	 * @since  3.1.2
+	 * The pattern for this tag's TypeAlias
+	 * @var  string
 	 */
 	protected $typeAliasPattern = null;
 
 	/**
-	 * Override for postStoreProcess param newTags, Set by setNewTags, used by onAfterStore and onBeforeStore
+	 * Override for postStoreProcess param newTags, Set by setNewTagsToAdd, used by onAfterStore
 	 *
-	 * @var    array
-	 * @since  3.1.2
+	 * @var  array
 	 */
-	protected $newTags = false;
+	protected $newTags = array();
 
 	/**
-	 * Override for postStoreProcess param replaceTags. Set by setNewTags, used by onAfterStore
+	 * Override for postStoreProcess param replaceTags. Set by setNewTagsToAdd, used by onAfterStore
 	 *
-	 * @var    boolean
-	 * @since  3.1.2
+	 * @var boolean
 	 */
 	protected $replaceTags = true;
 
@@ -59,9 +50,8 @@ class JTableObserverTags extends JTableObserver
 	 * Not public, so marking private and deprecated, but needed internally in parseTypeAlias for
 	 * PHP < 5.4.0 as it's not passing context $this to closure function.
 	 *
-	 * @var         JTableObserverTags
-	 * @since       3.1.2
-	 * @deprecated  Never use this
+	 * @var JTableObserverTags
+	 * @deprecated Never use this
 	 * @private
 	 */
 	public static $_myTableForPregreplaceOnly;
@@ -71,12 +61,10 @@ class JTableObserverTags extends JTableObserver
 	 * Creates the associated tags helper class instance
 	 * $typeAlias can be of the form "{variableName}.type", automatically replacing {variableName} with table-instance variables variableName
 	 *
-	 * @param   JObservableInterface  $observableObject  The subject object to be observed
-	 * @param   array                 $params            ( 'typeAlias' => $typeAlias )
+	 * @param   JObservableInterface|JTable  $observableObject  The subject object to be observed
+	 * @param   array                        $params            ( 'typeAlias' => $typeAlias )
 	 *
-	 * @return  JTableObserverTags
-	 *
-	 * @since   3.1.2
+	 * @return  JObserverInterface|JTableObserverTags
 	 */
 	public static function createObserver(JObservableInterface $observableObject, $params = array())
 	{
@@ -97,20 +85,11 @@ class JTableObserverTags extends JTableObserver
 	 * @param   string   $tableKey     The key of the table
 	 *
 	 * @return  void
-	 *
-	 * @since   3.1.2
 	 */
 	public function onBeforeStore($updateNulls, $tableKey)
 	{
 		$this->parseTypeAlias();
-		if (empty($this->table->tagsHelper->tags))
-		{
-			$this->tagsHelper->preStoreProcess($this->table);
-		}
-		else
-		{
-			$this->tagsHelper->preStoreProcess($this->table, (array) $this->table->tagsHelper->tags);
-		}
+		$this->tagsHelper->preStoreProcess($this->table);
 	}
 
 	/**
@@ -120,21 +99,13 @@ class JTableObserverTags extends JTableObserver
 	 * @param   boolean  &$result  The result of the load
 	 *
 	 * @return  void
-	 *
-	 * @since   3.1.2
 	 */
 	public function onAfterStore(&$result)
 	{
 		if ($result)
 		{
-			if (empty($this->table->tagsHelper->tags))
-			{
-				$result = $this->tagsHelper->postStoreProcess($this->table);
-			}
-			else
-			{
-				$result = $this->tagsHelper->postStoreProcess($this->table, $this->table->tagsHelper->tags);
-			}
+			$result = $this->tagsHelper->postStoreProcess($this->table);
+
 			// Restore default values for the optional params:
 			$this->newTags = array();
 			$this->replaceTags = true;
@@ -144,28 +115,26 @@ class JTableObserverTags extends JTableObserver
 	/**
 	 * Pre-processor for $table->delete($pk)
 	 *
-	 * @param   mixed  $pk  An optional primary key value to delete.  If not set the instance property value is used.
+	 * @param   mixed   $pk        An optional primary key value to delete.  If not set the instance property value is used.
+	 * @param   string  $tableKey  The normal key of the table
 	 *
 	 * @return  void
 	 *
-	 * @since   3.1.2
 	 * @throws  UnexpectedValueException
 	 */
-	public function onBeforeDelete($pk)
+	public function onBeforeDelete($pk, $tableKey)
 	{
 		$this->parseTypeAlias();
 		$this->tagsHelper->deleteTagData($this->table, $pk);
 	}
 
 	/**
-	 * Sets the new tags to be added or to replace existing tags
+	 * Sets the new tags to be added/replaced to the table row
 	 *
-	 * @param   array    $newTags      New tags to be added to or replace current tags for an item
+	 * @param   array    $newTags      New tags to be added or replaced
 	 * @param   boolean  $replaceTags  Replace tags (true) or add them (false)
 	 *
 	 * @return  boolean
-	 *
-	 * @since   3.1.2
 	 */
 	public function setNewTags($newTags, $replaceTags)
 	{
@@ -180,8 +149,6 @@ class JTableObserverTags extends JTableObserver
 	 * Storing result into $this->tagsHelper->typeAlias
 	 *
 	 * @return  void
-	 *
-	 * @since   3.1.2
 	 */
 	protected function parseTypeAlias()
 	{

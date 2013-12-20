@@ -27,8 +27,7 @@ defined('_JEXEC') or die;
 
 					<?php if ($item->displayHits) : ?>
 						<span class="mod-articles-category-hits">
-						(<?php echo $item->displayHits; ?>)
-						</span>
+						(<?php echo $item->displayHits; ?>)  </span>
 					<?php endif; ?>
 
 					<?php if ($params->get('show_author')) :?>

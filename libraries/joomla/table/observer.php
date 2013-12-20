@@ -12,7 +12,7 @@ defined('JPATH_PLATFORM') or die;
 /**
  * Table class supporting modified pre-order tree traversal behavior.
  *
- * @package     Joomla.Platform
+ * @package     Joomla
  * @subpackage  Table
  * @link        http://docs.joomla.org/JTableObserver
  * @since       3.1.2
@@ -22,8 +22,7 @@ abstract class JTableObserver implements JObserverInterface
 	/**
 	 * The observed table
 	 *
-	 * @var    JTable
-	 * @since  3.1.2
+	 * @var   JTable
 	 */
 	protected $table;
 
@@ -31,8 +30,6 @@ abstract class JTableObserver implements JObserverInterface
 	 * Constructor: Associates to $table $this observer
 	 *
 	 * @param   JTable  $table  Table to be observed
-	 *
-	 * @since   3.1.2
 	 */
 	public function __construct(JTable $table)
 	{
@@ -48,8 +45,6 @@ abstract class JTableObserver implements JObserverInterface
 	 * @param   boolean  $reset  True to reset the default values before loading the new row.
 	 *
 	 * @return  void
-	 *
-	 * @since   3.1.2
 	 */
 	public function onBeforeLoad($keys, $reset)
 	{
@@ -62,8 +57,6 @@ abstract class JTableObserver implements JObserverInterface
 	 * @param   array    $row      The loaded (and already binded to $this->table) row of the database table
 	 *
 	 * @return  void
-	 *
-	 * @since   3.1.2
 	 */
 	public function onAfterLoad(&$result, $row)
 	{
@@ -76,8 +69,6 @@ abstract class JTableObserver implements JObserverInterface
 	 * @param   string   $tableKey     The key of the table
 	 *
 	 * @return  void
-	 *
-	 * @since   3.1.2
 	 */
 	public function onBeforeStore($updateNulls, $tableKey)
 	{
@@ -89,8 +80,6 @@ abstract class JTableObserver implements JObserverInterface
 	 * @param   boolean  &$result  The result of the store
 	 *
 	 * @return  void
-	 *
-	 * @since   3.1.2
 	 */
 	public function onAfterStore(&$result)
 	{
@@ -99,14 +88,14 @@ abstract class JTableObserver implements JObserverInterface
 	/**
 	 * Pre-processor for $table->delete($pk)
 	 *
-	 * @param   mixed  $pk  An optional primary key value to delete.  If not set the instance property value is used.
+	 * @param   mixed   $pk        An optional primary key value to delete.  If not set the instance property value is used.
+	 * @param   string  $tableKey  The normal key of the table
 	 *
 	 * @return  void
 	 *
-	 * @since   3.1.2
 	 * @throws  UnexpectedValueException
 	 */
-	public function onBeforeDelete($pk)
+	public function onBeforeDelete($pk, $tableKey)
 	{
 	}
 
@@ -116,8 +105,6 @@ abstract class JTableObserver implements JObserverInterface
 	 * @param   mixed  $pk  The deleted primary key value.
 	 *
 	 * @return  void
-	 *
-	 * @since   3.1.2
 	 */
 	public function onAfterDelete($pk)
 	{

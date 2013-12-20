@@ -375,7 +375,7 @@ abstract class FinderIndexer
 					// Check if we're approaching the memory limit of the token table.
 					if ($count > self::$state->options->get('memory_table_limit', 30000))
 					{
-						$this->toggleTables(false);
+						self::toggleTables(false);
 					}
 
 					unset($string);
@@ -430,7 +430,7 @@ abstract class FinderIndexer
 					// Check if we're approaching the memory limit of the token table.
 					if ($count > self::$state->options->get('memory_table_limit', 30000))
 					{
-						$this->toggleTables(false);
+						self::toggleTables(false);
 					}
 				}
 			}

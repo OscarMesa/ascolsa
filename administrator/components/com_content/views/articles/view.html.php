@@ -27,8 +27,6 @@ class ContentViewArticles extends JViewLegacy
 	/**
 	 * Display the view
 	 *
-	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-	 *
 	 * @return  void
 	 */
 	public function display($tpl = null)
@@ -38,18 +36,15 @@ class ContentViewArticles extends JViewLegacy
 			ContentHelper::addSubmenu('articles');
 		}
 
-		$this->items         = $this->get('Items');
-		$this->pagination    = $this->get('Pagination');
-		$this->state         = $this->get('State');
-		$this->authors       = $this->get('Authors');
-		$this->filterForm    = $this->get('FilterForm');
-		$this->activeFilters = $this->get('ActiveFilters');
+		$this->items		= $this->get('Items');
+		$this->pagination	= $this->get('Pagination');
+		$this->state		= $this->get('State');
+		$this->authors		= $this->get('Authors');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
 		{
 			JError::raiseError(500, implode("\n", $errors));
-
 			return false;
 		}
 
@@ -81,19 +76,17 @@ class ContentViewArticles extends JViewLegacy
 	/**
 	 * Add the page title and toolbar.
 	 *
-	 * @return  void
-	 *
 	 * @since   1.6
 	 */
 	protected function addToolbar()
 	{
-		$canDo = JHelperContent::getActions($this->state->get('filter.category_id'), 0, 'com_content');
+		$canDo = ContentHelper::getActions($this->state->get('filter.category_id'));
 		$user  = JFactory::getUser();
 
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 
-		JToolbarHelper::title(JText::_('COM_CONTENT_ARTICLES_TITLE'), 'stack article');
+		JToolbarHelper::title(JText::_('COM_CONTENT_ARTICLES_TITLE'), 'article.png');
 
 		if ($canDo->get('core.create') || (count($user->getAuthorisedCategories('com_content', 'core.create'))) > 0 )
 		{
@@ -142,6 +135,50 @@ class ContentViewArticles extends JViewLegacy
 		}
 
 		JToolbarHelper::help('JHELP_CONTENT_ARTICLE_MANAGER');
+
+		JHtmlSidebar::setAction('index.php?option=com_content&view=articles');
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_PUBLISHED'),
+			'filter_published',
+			JHtml::_('select.options', JHtml::_('jgrid.publishedOptions'), 'value', 'text', $this->state->get('filter.published'), true)
+		);
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_CATEGORY'),
+			'filter_category_id',
+			JHtml::_('select.options', JHtml::_('category.options', 'com_content'), 'value', 'text', $this->state->get('filter.category_id'))
+		);
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_MAX_LEVELS'),
+			'filter_level',
+			JHtml::_('select.options', $this->f_levels, 'value', 'text', $this->state->get('filter.level'))
+		);
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_ACCESS'),
+			'filter_access',
+			JHtml::_('select.options', JHtml::_('access.assetgroups'), 'value', 'text', $this->state->get('filter.access'))
+		);
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_AUTHOR'),
+			'filter_author_id',
+			JHtml::_('select.options', $this->authors, 'value', 'text', $this->state->get('filter.author_id'))
+		);
+
+		JHtmlSidebar::addFilter(
+			JText::_('JOPTION_SELECT_LANGUAGE'),
+			'filter_language',
+			JHtml::_('select.options', JHtml::_('contentlanguage.existing', true, true), 'value', 'text', $this->state->get('filter.language'))
+		);
+
+		JHtmlSidebar::addFilter(
+		JText::_('JOPTION_SELECT_TAG'),
+		'filter_tag',
+		JHtml::_('select.options', JHtml::_('tag.options', true, true), 'value', 'text', $this->state->get('filter.tag'))
+		);
 	}
 
 	/**
@@ -154,16 +191,16 @@ class ContentViewArticles extends JViewLegacy
 	protected function getSortFields()
 	{
 		return array(
-			'a.ordering'     => JText::_('JGRID_HEADING_ORDERING'),
-			'a.state'        => JText::_('JSTATUS'),
-			'a.title'        => JText::_('JGLOBAL_TITLE'),
+			'a.ordering' => JText::_('JGRID_HEADING_ORDERING'),
+			'a.state' => JText::_('JSTATUS'),
+			'a.title' => JText::_('JGLOBAL_TITLE'),
 			'category_title' => JText::_('JCATEGORY'),
-			'access_level'   => JText::_('JGRID_HEADING_ACCESS'),
-			'a.created_by'   => JText::_('JAUTHOR'),
-			'language'       => JText::_('JGRID_HEADING_LANGUAGE'),
-			'a.created'      => JText::_('JDATE'),
-			'a.id'           => JText::_('JGRID_HEADING_ID'),
-			'a.featured'     => JText::_('JFEATURED')
+			'access_level' => JText::_('JGRID_HEADING_ACCESS'),
+			'a.created_by' => JText::_('JAUTHOR'),
+			'language' => JText::_('JGRID_HEADING_LANGUAGE'),
+			'a.created' => JText::_('JDATE'),
+			'a.id' => JText::_('JGRID_HEADING_ID'),
+			'a.featured' => JText::_('JFEATURED')
 		);
 	}
 }

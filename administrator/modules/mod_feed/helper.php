@@ -24,10 +24,8 @@ class ModFeedHelper
 	 * @param   JRegisty  $params  The parameters object.
 	 *
 	 * @return  JFeedReader|string  Return a JFeedReader object or a string message if error.
-	 *
-	 * @since   1.5
 	 */
-	public static function getFeed($params)
+	static function getFeed($params)
 	{
 		// Module params
 		$rssurl = $params->get('rssurl', '');
@@ -39,7 +37,15 @@ class ModFeedHelper
 			$feed   = new JFeedFactory;
 			$rssDoc = $feed->getFeed($rssurl);
 		}
-		catch (Exception $e)
+		catch (InvalidArgumentException $e)
+		{
+			return JText::_('MOD_FEED_ERR_FEED_NOT_RETRIEVED');
+		}
+		catch (RunTimeException $e)
+		{
+			return JText::_('MOD_FEED_ERR_FEED_NOT_RETRIEVED');
+		}
+		catch (LogicException $e)
 		{
 			return JText::_('MOD_FEED_ERR_FEED_NOT_RETRIEVED');
 		}
@@ -48,7 +54,6 @@ class ModFeedHelper
 		{
 			return JText::_('MOD_FEED_ERR_FEED_NOT_RETRIEVED');
 		}
-
 		return $rssDoc;
 	}
 }

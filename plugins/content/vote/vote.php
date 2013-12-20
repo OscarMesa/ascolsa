@@ -34,18 +34,12 @@ class PlgContentVote extends JPlugin
 	 * @param   object   &$params  The article params
 	 * @param   integer  $page     The 'page' number
 	 *
-	 * @return  mixed  html string containing code for the votes if in com_content else boolean false
+	 * @return  string  html string containing code for the votes
 	 *
 	 * @since   1.6
 	 */
 	public function onContentBeforeDisplay($context, &$row, &$params, $page=0)
 	{
-		$parts = explode(" ", $context);
-		if ($parts[0] != 'com_content')
-		{
-			return false;
-		}
-
 		$html = '';
 
 		if (!empty($params) && $params->get('show_vote', null))
@@ -84,14 +78,14 @@ class PlgContentVote extends JPlugin
 
 				for ($i = 1; $i < 6; $i++)
 				{
-					$options[] = JHtml::_('select.option', $i, JText::sprintf('PLG_VOTE_VOTE', $i));
+					$options[] = JHTML::_('select.option', $i, JText::sprintf('PLG_VOTE_VOTE', $i));
 				}
 
 				// Generate voting form
 				$html .= '<form method="post" action="' . htmlspecialchars($uri->toString()) . '" class="form-inline">';
 				$html .= '<span class="content_vote">';
 				$html .= '<label class="unseen element-invisible" for="content_vote_' . $row->id . '">' . JText::_('PLG_VOTE_LABEL') . '</label>';
-				$html .= JHtml::_('select.genericlist', $options, 'user_rating', null, 'value', 'text', '5', 'content_vote_' . $row->id);
+				$html .= JHTML::_('select.genericlist', $options, 'user_rating', null, 'value', 'text', '5', 'content_vote_' . $row->id);
 				$html .= '&#160;<input class="btn btn-mini" type="submit" name="submit_vote" value="' . JText::_('PLG_VOTE_RATE') . '" />';
 				$html .= '<input type="hidden" name="task" value="article.vote" />';
 				$html .= '<input type="hidden" name="hitcount" value="0" />';

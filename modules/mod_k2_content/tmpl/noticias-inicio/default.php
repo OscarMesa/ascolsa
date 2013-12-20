@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 	<?php endif; ?>
 
 	<?php if(count($items)): ?>
-  <ul>
+  <ul class="grid-100 grid-parent">
     <?php foreach ($items as $key=>$item):	?>
     <li class="<?php echo ($key%2) ? "odd" : "even"; if(count($items)==$key+1) echo ' lastItem'; ?> grid-50">
 
@@ -27,7 +27,9 @@ defined('_JEXEC') or die;
 
       <!-- K2 Plugins: K2BeforeDisplay -->
       <?php echo $item->event->K2BeforeDisplay; ?>
-
+      <?php if($params->get('itemTitle')): ?>
+      <a class="moduleItemTitle" href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
+      <?php endif; ?>
       <?php if($params->get('itemAuthorAvatar')): ?>
       <a class="k2Avatar moduleItemAuthorAvatar" rel="author" href="<?php echo $item->authorLink; ?>">
 				<img src="<?php echo $item->authorAvatar; ?>" alt="<?php echo K2HelperUtilities::cleanHtml($item->author); ?>" style="width:<?php echo $avatarWidth; ?>px;height:auto;" />
@@ -38,9 +40,7 @@ defined('_JEXEC') or die;
 	      	<img src="<?php echo $item->image; ?>" alt="<?php echo K2HelperUtilities::cleanHtml($item->title); ?>"/>
 	      </a>
 	      <?php endif; ?>
-      <?php if($params->get('itemTitle')): ?>
-      <a class="moduleItemTitle" href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
-      <?php endif; ?>
+
 
       <?php if($params->get('itemAuthor')): ?>
       <div class="moduleItemAuthor">
@@ -201,5 +201,7 @@ defined('_JEXEC') or die;
 		<div class="clr"></div>
 	</div>
 	<?php endif; ?>
-	<a href="#" class="ver_todas" /> Ver todas las noticias</a>
+	<div class="grid_100 boton_ver_todas" >
+		<a href="#" class=" ver_todas" /> Ver todas las noticias</a>
+	</div>
 </div>

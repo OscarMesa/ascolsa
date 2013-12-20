@@ -63,6 +63,11 @@ class JFormRuleEmail extends JFormRule
 		// Determine if the multiple attribute is present
 		$multiple = ((string) $element['multiple'] == 'true' || (string) $element['multiple'] == 'multiple');
 
+		if ($multiple)
+		{
+			$values = explode(',', $value);
+		}
+
 		if (!$multiple)
 		{
 			// Handle idn e-mail addresses by converting to punycode.
@@ -76,8 +81,6 @@ class JFormRuleEmail extends JFormRule
 		}
 		else
 		{
-			$values = explode(',', $value);
-
 			foreach ($values as $value)
 			{
 				// Handle idn e-mail addresses by converting to punycode.

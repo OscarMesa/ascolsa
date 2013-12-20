@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 JHtml::_('bootstrap.tooltip');
 JHtml::_('formbehavior.chosen', 'select');
+JHtml::_('dropdown.init');
 JHtml::_('formbehavior.chosen', 'select');
 
 $user = JFactory::getUser();

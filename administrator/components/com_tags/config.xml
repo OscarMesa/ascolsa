@@ -14,33 +14,10 @@
 			extension="com_tags"
 			view="tag"
 		/>
-
-		<field
-			name="save_history"
-			type="radio"
-			class="btn-group"
-			default="0"
-			label="JGLOBAL_SAVE_HISTORY_OPTIONS_LABEL"
-			description="JGLOBAL_SAVE_HISTORY_OPTIONS_DESC"
-			>
-			<option
-				value="0">JNO</option>
-			<option
-				value="1">JYES</option>
-		</field>
-
-		<field
-			name="history_limit"
-			type="text"
-			filter="integer"
-			label="JGLOBAL_HISTORY_LIMIT_OPTIONS_LABEL"
-			description="JGLOBAL_HISTORY_LIMIT_OPTIONS_DESC"
-			default="5"
-		/>
-
+	
 		<field 
 			name="show_tag_title" 
-			type="radio" class="btn-group btn-group-yesno"
+			type="radio" class="btn-group"
 			label="COM_TAGS_SHOW_TAG_TITLE_LABEL"
 			description="COM_TAGS_SHOW_TAG_TITLE_DESC"
 			default="0"
@@ -51,7 +28,7 @@
 
 		<field 
 			name="tag_list_show_tag_image" 
-			type="radio" class="btn-group btn-group-yesno"
+			type="radio" class="btn-group"
 			description="COM_TAGS_SHOW_TAG_IMAGE_DESC"
 			label="COM_TAGS_SHOW_TAG_IMAGE_LABEL"
 			default="1"
@@ -63,7 +40,7 @@
 		<field 
 			name="tag_list_show_tag_description" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="COM_TAGS_SHOW_TAG_DESCRIPTION_DESC"
 			label="COM_TAGS_SHOW_TAG_DESCRIPTION_LABEL"
 			default="1"
@@ -82,7 +59,7 @@
 		<field 
 			name="show_tag_num_items" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			label="COM_TAGS_NUMBER_TAG_ITEMS_LABEL"
 			description="COM_TAGS_NUMBER_TAG_ITEMS_DESC"
 			default="0"
@@ -106,7 +83,7 @@
 		<field 
 			name="tag_list_orderby_direction" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="JGLOBAL_ORDER_DIRECTION_DESC"
 			label="JGLOBAL_ORDER_DIRECTION_LABEL"
 			default="ASC"
@@ -118,7 +95,7 @@
 		<field 
 			name="show_headings" 
 			type="radio"
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			default="1"			
 			description="JGLOBAL_SHOW_HEADINGS_DESC"
 			label="JGLOBAL_SHOW_HEADINGS_LABEL"
@@ -144,7 +121,7 @@
 		<field 
 			name="tag_list_show_item_image" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="COM_TAGS_SHOW_ITEM_IMAGE_DESC"
 			label="COM_TAGS_SHOW_ITEM_IMAGE_LABEL"
 			default="1"
@@ -181,7 +158,7 @@
 		<field 
 			name="return_any_or_all" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			label="COM_TAGS_SEARCH_TYPE_LABEL"
 			description="COM_TAGS_SEARCH_TYPE_DESC"
 			default="1"
@@ -193,7 +170,7 @@
 		<field 
 			name="include_children" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="COM_TAGS_INCLUDE_CHILDREN_DESC"
 			label="COM_TAGS_INCLUDE_CHILDREN_LABEL"
 			default="0"
@@ -256,7 +233,7 @@
 		<field 
 			name="all_tags_orderby_direction" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="JGLOBAL_ORDER_DIRECTION_DESC"
 			label="JGLOBAL_ORDER_DIRECTION_LABEL"
 			default="ASC"
@@ -268,7 +245,7 @@
 		<field 
 			name="all_tags_show_tag_image" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="COM_TAGS_SHOW_ITEM_IMAGE_DESC"
 			label="COM_TAGS_SHOW_ITEM_IMAGE_LABEL"
 			default="1"
@@ -280,7 +257,7 @@
 		<field 
 			name="all_tags_show_tag_descripion" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="COM_TAGS_SHOW_ITEM_DESCRIPTION_DESC"
 			label="COM_TAGS_SHOW_ITEM_DESCRIPTION_LABEL"
 			default="1"
@@ -300,7 +277,7 @@
 		<field 
 			name="all_tags_show_tag_hits" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="COM_TAGS_FIELD_CONFIG_HITS_DESC"
 			label="JGLOBAL_HITS"
 			default="0"
@@ -318,12 +295,12 @@
 		<field
 			name="filter_field"
 			type="radio"
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			default="1"
 			description="JGLOBAL_FILTER_FIELD_DESC"
 			label="JGLOBAL_FILTER_FIELD_LABEL"
 			>
-				<option value="0">JHIDE</option>
+				<option value="hide">JHIDE</option>
 				<option value="1">JSHOW</option>
 		</field>
 
@@ -331,7 +308,7 @@
 			name="show_pagination_limit" 
 			type="radio"
 			default="1"
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="JGLOBAL_DISPLAY_SELECT_DESC"
 			label="JGLOBAL_DISPLAY_SELECT_LABEL"
 		>
@@ -354,7 +331,7 @@
 		<field
 			name="show_pagination_results"
 			type="radio"
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			default="1"
 			label="JGLOBAL_PAGINATION_RESULTS_LABEL"
 			description="JGLOBAL_PAGINATION_RESULTS_DESC"
@@ -373,7 +350,7 @@
 		<field 
 			name="tag_field_ajax_mode" 
 			type="radio" 
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			description="COM_TAGS_TAG_FIELD_MODE_DESC"
 			label="COM_TAGS_TAG_FIELD_MODE_LABEL"
 			default="1"
@@ -395,7 +372,7 @@
 		<field
 			name="show_feed_link"
 			type="radio"
-			class="btn-group btn-group-yesno"
+			class="btn-group"
 			default="1"
 			label="JGLOBAL_SHOW_FEED_LINK_LABEL"
 			description="JGLOBAL_SHOW_FEED_LINK_DESC">

@@ -25,12 +25,11 @@ class PlgSystemLanguagecode extends JPlugin
 	 */
 	public function onAfterRender()
 	{
-		$app = JFactory::getApplication();
 		// Use this plugin only in site application
-		if ($app->isSite())
+		if (JFactory::getApplication()->isSite())
 		{
 			// Get the response body
-			$body = $app->getBody();
+			$body = JResponse::getBody();
 
 			// Get the current language code
 			$code = JFactory::getDocument()->getLanguage();
@@ -78,7 +77,7 @@ class PlgSystemLanguagecode extends JPlugin
 					$replace[] = '${1}' . $new_code . '${3}';
 				}
 			}
-			$app->setBody(preg_replace($patterns, $replace, $body));
+			JResponse::setBody(preg_replace($patterns, $replace, $body));
 		}
 	}
 

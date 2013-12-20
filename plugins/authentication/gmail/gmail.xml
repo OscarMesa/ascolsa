@@ -39,7 +39,7 @@
 
 				<field name="verifypeer" type="radio"
 					default="1"
-					class="btn-group btn-group-yesno"
+					class="btn-group"
 					description="PLG_GMAIL_FIELD_VERIFYPEER_DESC"
 					label="PLG_GMAIL_FIELD_VERIFYPEER_LABEL"
 				>

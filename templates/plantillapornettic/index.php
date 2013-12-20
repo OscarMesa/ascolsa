@@ -58,7 +58,9 @@ $user = JFactory::getUser();
   <script src="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/unsemantic/javascripts/html5.js"></script>
 <![endif]-->
 <!--[if (gt IE 8) | (IEMobile)]><!-->
-  <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/unsemantic/stylesheets/unsemantic-grid-responsive.css" />
+  <!-- <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template;?>/unsemantic/unsemantic-grid-responsive-tablet.css"> -->
+<link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/unsemantic/stylesheets/unsemantic-grid-desktop.css" />
+  <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/unsemantic/stylesheets/unsemantic-grid-base.css" />
 <!--<![endif]-->
 <!--[if (lt IE 9) & (!IEMobile)]>
   <link rel="stylesheet" href="<?php echo $this->baseurl ?>/templates/<?php echo $this->template; ?>/unsemantic/stylesheets/ie.css" />
@@ -129,18 +131,15 @@ if ($menu->getActive() == $menu->getDefault()) {
 	<div class="body">
 		<!-- Header -->
 		<header class="grid-100 header " role="banner">
-			
-			<!-- <div class="grid-35" id="logo">
-				<jdoc:include type="modules" name="logo" style="none" />
-			</div> -->
-			<div class="grid-25" id="logo_ascolsa">
-				<jdoc:include type="modules" name="logo_ascolsa" style="xhtml" />
+
+			<div class="grid-25 grid-parent" id="logo">
+				<jdoc:include type="modules" name="logo" style="xhtml" />
 			</div>
 			<nav class="navigation grid-75 grid-parent" id="menu_top" role="navigation">
 				<div class="grid-65">
 					<jdoc:include type="modules" name="menu_top" style="xhtml" />
 				</div>
-				<div class="grid-35" id="buscador">
+				<div class="grid-35 push-65" id="buscador">
 					<div class="grid-70"><jdoc:include type="modules" name="buscador" style="none"/></div>
 					<div class="grid-30"><jdoc:include type="modules" name="redes_sociales" style="none"/></div>
 				</div>
@@ -164,11 +163,18 @@ if ($menu->getActive() == $menu->getDefault()) {
 				<!-- Footer -->
 
 			</main>
-			<?php if ($this->countModules('noticias')) : ?>
+			<?php if ($this->countModules('clientes')) : ?>
 			<div id="noticias" class="grid-90 push-5">
-				<div id="noticias-img-izq"></div>
-					<jdoc:include type="modules" name="noticias" style="xhtml" />
-				<div id="noticias-img-der"></div>
+					<div id="noticias-img-izq"></div>
+				<div class="inside">
+					<div class="grid-20 titulo" >
+						Nuestros clientes
+					</div>
+					<div class="grid-80">
+						<jdoc:include type="modules" name="clientes" style="xhtml" />
+					</div>
+				</div>
+					<div id="noticias-img-der"></div>
 			</div>
 			<?php endif; ?>
 		</div>
@@ -185,45 +191,36 @@ if ($menu->getActive() == $menu->getDefault()) {
 					</div>
 				<?php endif; ?>
 				<div class="grid-100 grid-parent">
-					<div class="grid-25" id="twitter">
-						<h3>Tweets</h3>
-						<jdoc:include type="modules" name="twitter" style="xhtml" />
+					<div class="grid-50" id="ultimas_noticias">
+						<jdoc:include type="modules" name="noticias" style="xhtml" />
 					</div>
-
-					<div class="grid-75">
-						<?php if ($this->countModules('clientes')) : ?>
-						<div class="grid-100 " id="clientes" role="navigation">
-							<h3>Aliados Corporativos | <span>Empresas que hoy son nuestro pilar</span></h3>
-							<jdoc:include type="modules" name="clientes" style="xhtml" />
-						</div>
-						<?php endif; ?>
-						<div class="grid-50" id="banner1Home">
-
-						</div>
-						<div class="grid-50" id="banner2Home">
-						</div>
-						<div class="grid-100" id="bannerBottomHome">
-
-						</div>
+					<div class="grid-50" id="banner_home">
+						<jdoc:include type="modules" name="banner2" style="xhtml" />
 					</div>
 				</div>
 
 			</div>
 		</div>
 		<?php } ?>
-		<div id="menu_inferior">
-			<div class="grid-container">
-				<div  class="grid-100">
-				<p id="moviendo">Moviendo a todo un país</p>
+		<div id="footer">
+		<div class="grid-container">
+			<div class="grid-100 grid-parent">
+			<footer class="grid-40"  role="contentinfo">
+				<jdoc:include type="modules" name="pie-de-pagina" style="none" />
+			</footer>
+					<div id="menu_inferior" class="grid-40">
+
+				
+				
 				<div id="menu_inferior_interno">	<jdoc:include type="modules" name="menu_inferior" style="xhtml" />
 				</div>
 				</div>
+				<div class="grid-20">
+					Dise&ntilde;ado por <a href="http://www.nettic.com.co/">Nettic</a>
+				</div>
+				
 			</div>
 		</div>
-		<div class="grid-container">
-			<footer class="grid-100" id="footer" role="contentinfo">
-				<jdoc:include type="modules" name="pie-de-pagina" style="none" />
-			</footer>
 		</div>
 	</div>
 	

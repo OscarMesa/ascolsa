@@ -143,6 +143,7 @@ class JUri
 	 * @return  JUri  The URI object.
 	 *
 	 * @since   11.1
+	 * @throws  InvalidArgumentException
 	 */
 	public static function getInstance($uri = 'SERVER')
 	{
@@ -166,7 +167,6 @@ class JUri
 				 * to determine if we are running on apache or IIS.  If PHP_SELF and REQUEST_URI
 				 * are present, we will assume we are running on apache.
 				 */
-
 				if (!empty($_SERVER['PHP_SELF']) && !empty($_SERVER['REQUEST_URI']))
 				{
 					// To build the entire URI we need to prepend the protocol, and the http host
@@ -191,8 +191,11 @@ class JUri
 					}
 				}
 
-				// Extra cleanup to remove invalid chars in the URL to prevent injections through the Host header
-				$theURI = str_replace(array("'", '"', '<', '>'), array("%27", "%22", "%3C", "%3E"), $theURI);
+				// Check for quotes in the URL to prevent injections through the Host header
+				if ($theURI !== str_replace(array("'", '"', '<', '>'), '', $theURI))
+				{
+					throw new InvalidArgumentException('Invalid URI detected.');
+				}
 			}
 			else
 			{
@@ -203,7 +206,7 @@ class JUri
 			self::$instances[$uri] = new JUri($theURI);
 		}
 
-		return self::$instances[$uri];
+		return clone self::$instances[$uri];
 	}
 
 	/**

@@ -5,13 +5,11 @@
  *
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- *
- * @deprecated  3.2
  */
 
 defined('JPATH_BASE') or die;
-$title = $displayData->getForm()->getValue('title');
-$name = $displayData->getForm()->getValue('name');
+$title = $displayData->get('form')->getValue('title');
+$name = $displayData->get('form')->getValue('name');
 
 ?>
 

@@ -51,16 +51,9 @@ class JoomlaupdateModelDefault extends JModelLegacy
 				$updateURL = 'http://update.joomla.org/core/test/list_test.xml';
 				break;
 
-			// "Custom" if custom URL empty no changes
+			// "Custom"
 			case 'custom':
-				if ($params->get('customurl', '') != '')
-				{
-					$updateURL = $params->get('customurl', '');
-				}
-				else
-				{
-					return JError::raiseWarning(403, JText::_('COM_JOOMLAUPDATE_CONFIG_UPDATESOURCE_CUSTOM_ERROR'));
-				}
+				$updateURL = $params->get('customurl', '');
 				break;
 
 			// "Do not change"
@@ -284,7 +277,6 @@ class JoomlaupdateModelDefault extends JModelLegacy
 	protected function downloadPackage($url, $target)
 	{
 		JLoader::import('helpers.download', JPATH_COMPONENT_ADMINISTRATOR);
-		JLog::add(JText::sprintf('COM_JOOMLAUPDATE_UPDATE_LOG_URL', $packageURL), JLog::INFO, 'Update');
 		$result = AdmintoolsHelperDownload::download($url, $target);
 
 		if (!$result)
@@ -717,9 +709,6 @@ ENDDATA;
 		{
 			$installer->set('extension_message', $msg);
 		}
-
-		// Refresh versionable assets cache
-		JFactory::getApplication()->flushAssets();
 
 		return true;
 	}

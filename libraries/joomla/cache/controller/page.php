@@ -87,7 +87,7 @@ class JCacheControllerPage extends JCacheController
 		if ($data !== false)
 		{
 			$data = unserialize(trim($data));
-
+			
 			$data = JCache::getWorkarounds($data);
 
 			$this->_setEtag($id);
@@ -101,7 +101,7 @@ class JCacheControllerPage extends JCacheController
 		// Set id and group placeholders
 		$this->_id 		= $id;
 		$this->_group 	= $group;
-
+		
 		return false;
 	}
 
@@ -119,10 +119,10 @@ class JCacheControllerPage extends JCacheController
 	 */
 	public function store($data, $id, $group = null, $wrkarounds = true)
 	{
-		// Get page data from the application object
+		// Get page data from JResponse
 		if (empty($data))
 		{
-			$data = JFactory::getApplication()->getBody();
+			$data = JResponse::getBody();
 		}
 
 		// Get id and group and reset the placeholders
@@ -146,7 +146,7 @@ class JCacheControllerPage extends JCacheController
 					'headers' 	=> true
 				));
 			}
-
+			
 			if ($this->_locktest->locked == false)
 			{
 				$this->_locktest = $this->cache->lock($id, $group);
@@ -206,6 +206,6 @@ class JCacheControllerPage extends JCacheController
 	 */
 	protected function _setEtag($etag)
 	{
-		JFactory::getApplication()->setHeader('ETag', $etag, true);
+		JResponse::setHeader('ETag', $etag, true);
 	}
 }

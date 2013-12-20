@@ -22,8 +22,6 @@ class JMenuSite extends JMenu
 	 * Loads the entire menu table into memory.
 	 *
 	 * @return  array
-	 *
-	 * @since   1.5
 	 */
 	public function load()
 	{
@@ -56,7 +54,6 @@ class JMenuSite extends JMenu
 		{
 			// Get parent information.
 			$parent_tree = array();
-
 			if (isset($this->_items[$item->parent_id]))
 			{
 				$parent_tree  = $this->_items[$item->parent_id]->tree;
@@ -82,14 +79,12 @@ class JMenuSite extends JMenu
 	 * @param   boolean  $firstonly   If true, only returns the first item found
 	 *
 	 * @return  array
-	 *
-	 * @since   1.6
 	 */
 	public function getItems($attributes, $values, $firstonly = false)
 	{
 		$attributes = (array) $attributes;
-		$values     = (array) $values;
-		$app        = JApplication::getInstance('site');
+		$values 	= (array) $values;
+		$app		= JApplication::getInstance('site');
 
 		if ($app->isSite())
 		{
@@ -135,7 +130,7 @@ class JMenuSite extends JMenu
 	 *
 	 * @return  object  The item object
 	 *
-	 * @since   1.6
+	 * @since   1.5
 	 */
 	public function getDefault($language = '*')
 	{
@@ -152,4 +147,5 @@ class JMenuSite extends JMenu
 			return 0;
 		}
 	}
+
 }

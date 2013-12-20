@@ -285,9 +285,8 @@ class AdmintoolsHelperDownload
 		// Open the URL for reading
 		if (function_exists('stream_context_create'))
 		{
-			$opts = stream_context_get_options(stream_context_get_default());
-			$opts['http']['user_agent'] = 'Joomla/' . JVERSION;
-			$context = stream_context_create($opts);
+			$httpopts = array('user_agent' => 'Joomla/' . JVERSION);
+			$context = stream_context_create(array( 'http' => $httpopts ));
 			$ih = @fopen($url, 'r', false, $context);
 		}
 		else

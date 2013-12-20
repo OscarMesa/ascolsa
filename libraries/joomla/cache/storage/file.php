@@ -19,8 +19,6 @@ defined('JPATH_PLATFORM') or die;
 class JCacheStorageFile extends JCacheStorage
 {
 	/**
-	 * Root path
-	 *
 	 * @var    string
 	 * @since  11.1
 	 */

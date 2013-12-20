@@ -31,7 +31,7 @@ $query->clear()
 	->where('guest = 0 AND client_id = 1');
 
 $db->setQuery($query);
-$count = (int) $db->loadResult();
+$count = '<span class="badge">' . (int) $db->loadResult() . '</span>';
 
 // Set the inbox link.
 if ($input->getBool('hidemainmenu'))
@@ -60,6 +60,6 @@ $query->clear()
 	->where('guest = 0 AND client_id = 0');
 
 $db->setQuery($query);
-$online_num = (int) $db->loadResult();
+$online_num = '<span class="badge">' . (int) $db->loadResult() . '</span>';
 
 require JModuleHelper::getLayoutPath('mod_status', $params->get('layout', 'default'));

@@ -45,11 +45,9 @@ abstract class JRegistryFormat
 		{
 			// Only load the file if the class does not exist.
 			$class = 'JRegistryFormat' . $type;
-
 			if (!class_exists($class))
 			{
 				$path = __DIR__ . '/format/' . $type . '.php';
-
 				if (is_file($path))
 				{
 					include_once $path;
@@ -62,7 +60,6 @@ abstract class JRegistryFormat
 
 			self::$instances[$type] = new $class;
 		}
-
 		return self::$instances[$type];
 	}
 

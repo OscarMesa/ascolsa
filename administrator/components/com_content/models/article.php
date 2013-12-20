@@ -27,14 +27,6 @@ class ContentModelArticle extends JModelAdmin
 	protected $text_prefix = 'COM_CONTENT';
 
 	/**
-	 * The type alias for this content type (for example, 'com_content.article').
-	 *
-	 * @var      string
-	 * @since    3.2
-	 */
-	public $typeAlias = 'com_content.article';
-
-	/**
 	 * Batch copy items to a new category or current.
 	 *
 	 * @param   integer  $value     The new category.
@@ -49,10 +41,41 @@ class ContentModelArticle extends JModelAdmin
 	{
 		$categoryId = (int) $value;
 
+		$table = $this->getTable();
 		$i = 0;
 
-		if (!parent::checkCategoryId($categoryId))
+		// Check that the category exists
+		if ($categoryId)
 		{
+			$categoryTable = JTable::getInstance('Category');
+			if (!$categoryTable->load($categoryId))
+			{
+				if ($error = $categoryTable->getError())
+				{
+					// Fatal error
+					$this->setError($error);
+					return false;
+				}
+				else
+				{
+					$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
+					return false;
+				}
+			}
+		}
+
+		if (empty($categoryId))
+		{
+			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_MOVE_CATEGORY_NOT_FOUND'));
+			return false;
+		}
+
+		// Check that the user has create permission for the component
+		$extension = JFactory::getApplication()->input->get('option', '');
+		$user = JFactory::getUser();
+		if (!$user->authorise('core.create', $extension . '.category.' . $categoryId))
+		{
+			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
 			return false;
 		}
 
@@ -62,16 +85,15 @@ class ContentModelArticle extends JModelAdmin
 			// Pop the first ID off the stack
 			$pk = array_shift($pks);
 
-			$this->table->reset();
+			$table->reset();
 
 			// Check that the row actually exists
-			if (!$this->table->load($pk))
+			if (!$table->load($pk))
 			{
-				if ($error = $this->table->getError())
+				if ($error = $table->getError())
 				{
 					// Fatal error
 					$this->setError($error);
-
 					return false;
 				}
 				else
@@ -83,40 +105,38 @@ class ContentModelArticle extends JModelAdmin
 			}
 
 			// Alter the title & alias
-			$data = $this->generateNewTitle($categoryId, $this->table->alias, $this->table->title);
-			$this->table->title = $data['0'];
-			$this->table->alias = $data['1'];
+			$data = $this->generateNewTitle($categoryId, $table->alias, $table->title);
+			$table->title = $data['0'];
+			$table->alias = $data['1'];
 
 			// Reset the ID because we are making a copy
-			$this->table->id = 0;
+			$table->id = 0;
 
 			// New category ID
-			$this->table->catid = $categoryId;
+			$table->catid = $categoryId;
 
 			// TODO: Deal with ordering?
 			//$table->ordering	= 1;
 
 			// Get the featured state
-			$featured = $this->table->featured;
+			$featured = $table->featured;
 
 			// Check the row.
-			if (!$this->table->check())
+			if (!$table->check())
 			{
 				$this->setError($table->getError());
 				return false;
 			}
 
-			parent::createTagsHelper($this->tagsObserver, $this->type, $pk, $this->typeAlias, $this->table);
-
 			// Store the row.
-			if (!$this->table->store())
+			if (!$table->store())
 			{
 				$this->setError($table->getError());
 				return false;
 			}
 
 			// Get the new item ID
-			$newId = $this->table->get('id');
+			$newId = $table->get('id');
 
 			// Add the new ID to the array
 			$newIds[$i] = $newId;
@@ -278,7 +298,7 @@ class ContentModelArticle extends JModelAdmin
 
 		// Load associated content items
 		$app = JFactory::getApplication();
-		$assoc = JLanguageAssociations::isEnabled();
+		$assoc = isset($app->item_associations) ? $app->item_associations : 0;
 
 		if ($assoc)
 		{
@@ -368,7 +388,7 @@ class ContentModelArticle extends JModelAdmin
 
 		// Prevent messing with article language and category when editing existing article with associations
 		$app = JFactory::getApplication();
-		$assoc = JLanguageAssociations::isEnabled();
+		$assoc = isset($app->item_associations) ? $app->item_associations : 0;
 
 		if ($app->isSite() && $assoc && $this->getState('article.id'))
 		{
@@ -433,7 +453,7 @@ class ContentModelArticle extends JModelAdmin
 
 			foreach ($data['urls'] as $i => $url)
 			{
-				if ($url != false && ($i == 'urla' || $i == 'urlb' || $i == 'urlc'))
+				if ($url != false && ($i == 'urla' || $i == 'urlb' || $i = 'urlc'))
 				{
 					$data['urls'][$i] = JStringPunycode::urlToPunycode($url);
 				}
@@ -461,7 +481,7 @@ class ContentModelArticle extends JModelAdmin
 				$this->featured($this->getState($this->getName() . '.id'), $data['featured']);
 			}
 
-			$assoc = JLanguageAssociations::isEnabled();
+			$assoc = isset($app->item_associations) ? $app->item_associations : 0;
 			if ($assoc)
 			{
 				$id = (int) $this->getState($this->getName() . '.id');
@@ -648,7 +668,7 @@ class ContentModelArticle extends JModelAdmin
 	{
 		// Association content items
 		$app = JFactory::getApplication();
-		$assoc = JLanguageAssociations::isEnabled();
+		$assoc = isset($app->item_associations) ? $app->item_associations : 0;
 		if ($assoc)
 		{
 			$languages = JLanguageHelper::getLanguages('lang_code');

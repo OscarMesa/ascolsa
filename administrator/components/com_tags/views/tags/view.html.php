@@ -74,9 +74,8 @@ class TagsViewTags extends JViewLegacy
 	protected function addToolbar()
 	{
 		$state	= $this->get('State');
-		$canDo	= JHelperContent::getActions(null, null, 'com_tags');
+		$canDo	= TagsHelper::getActions($state->get('filter.parent_id'));
 		$user	= JFactory::getUser();
-
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 
